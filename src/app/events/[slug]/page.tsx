@@ -23,9 +23,9 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
   if (!event) notFound();
 
   const statusColor = {
-    confirmed: 'bg-success/20 text-success',
-    tentative: 'bg-accent/20 text-accent',
-    completed: 'bg-text-muted/20 text-text-muted',
+    confirmed: 'bg-success/20 text-success border-success/30',
+    tentative: 'bg-accent/20 text-accent border-accent/30',
+    completed: 'bg-text-muted/20 text-text-muted border-text-muted/30',
   }[event.status];
 
   const categoryLabel = {
@@ -36,31 +36,38 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <Link href="/events" className="inline-flex items-center gap-2 text-text-muted hover:text-primary-light text-sm mb-6 transition-colors">
-        ← Kembali ke daftar event
+      <Link href="/events" className="inline-flex items-center gap-2 text-text-muted hover:text-primary-light text-sm mb-6 transition-all duration-300 group">
+        <span className="group-hover:-translate-x-1 transition-transform duration-300">←</span>
+        Kembali ke daftar event
       </Link>
 
-      <div className="bg-surface border border-border rounded-xl overflow-hidden">
-        <div className="bg-gradient-to-r from-primary/20 to-secondary/20 p-8 text-center">
-          <span className="text-6xl block mb-4">{SPORT_EMOJI[event.sport]}</span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-text mb-2">{event.title}</h1>
-          <div className="flex items-center justify-center gap-2 flex-wrap">
-            <span className={`text-xs px-3 py-1 rounded-full font-medium ${statusColor}`}>
+      <div className="glass rounded-2xl overflow-hidden card-hover">
+        {/* Hero banner */}
+        <div className="relative bg-gradient-to-br from-primary/25 via-secondary/15 to-primary/10 p-10 sm:p-14 text-center overflow-hidden">
+          {/* Dot pattern */}
+          <div className="absolute inset-0 dot-pattern opacity-50" />
+          
+          {/* Large emoji */}
+          <span className="relative text-7xl sm:text-8xl block mb-5 drop-shadow-lg">{SPORT_EMOJI[event.sport]}</span>
+          <h1 className="relative text-2xl sm:text-3xl lg:text-4xl font-bold text-text mb-4">{event.title}</h1>
+          <div className="relative flex items-center justify-center gap-2 flex-wrap">
+            <span className={`text-xs px-3.5 py-1 rounded-full font-medium border ${statusColor}`}>
               {event.status === 'confirmed' ? '✓ Confirmed' : event.status === 'tentative' ? '? Tentative' : '✓ Selesai'}
             </span>
-            <span className="text-xs px-3 py-1 rounded-full bg-surface-light text-text-muted">
+            <span className="text-xs px-3.5 py-1 rounded-full bg-surface-light/80 text-text-muted border border-border/50">
               {categoryLabel}
             </span>
-            <span className="text-xs px-3 py-1 rounded-full bg-surface-light text-text-muted">
+            <span className="text-xs px-3.5 py-1 rounded-full bg-surface-light/80 text-text-muted border border-border/50">
               {SPORT_LABELS[event.sport]}
             </span>
           </div>
         </div>
 
         <div className="p-6 sm:p-8 space-y-6">
-          <p className="text-text-muted leading-relaxed">{event.description}</p>
+          <p className="text-text-muted leading-relaxed text-base">{event.description}</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Info grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <InfoRow icon="📅" label="Tanggal" value={`${formatDate(event.startDate)}${event.startDate !== event.endDate ? ` - ${formatDate(event.endDate)}` : ''}`} />
             <InfoRow icon="📍" label="Venue" value={event.venue} />
             <InfoRow icon="🏙️" label="Kota" value={`${event.city}, ${event.country}`} />
@@ -69,25 +76,39 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
             {event.priceRange && <InfoRow icon="💰" label="Harga Tiket" value={event.priceRange} />}
           </div>
 
+          {/* Tags as colorful pills */}
           {event.tags.length > 0 && (
             <div>
-              <p className="text-sm font-medium text-text mb-2">Tags</p>
+              <p className="text-sm font-medium text-text mb-3">Tags</p>
               <div className="flex flex-wrap gap-2">
                 {event.tags.map((tag) => (
-                  <span key={tag} className="text-xs bg-primary/10 text-primary-light px-3 py-1 rounded-full">{tag}</span>
+                  <span key={tag} className="text-xs bg-gradient-to-r from-primary/15 to-secondary/15 text-primary-light px-3.5 py-1.5 rounded-full border border-primary/20 hover:border-primary/40 transition-colors">
+                    {tag}
+                  </span>
                 ))}
               </div>
             </div>
           )}
 
-          <div className="flex flex-wrap gap-3 pt-4 border-t border-border">
+          {/* Action buttons */}
+          <div className="flex flex-wrap gap-3 pt-4 border-t border-border/50">
             {event.ticketUrl && (
-              <a href={event.ticketUrl} target="_blank" rel="noopener noreferrer" className="bg-primary hover:bg-primary/90 text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-colors">
+              <a
+                href={event.ticketUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all duration-300 shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:scale-105"
+              >
                 🎫 Beli Tiket
               </a>
             )}
             {event.websiteUrl && (
-              <a href={event.websiteUrl} target="_blank" rel="noopener noreferrer" className="bg-surface-light border border-border hover:border-primary/50 text-text font-medium px-5 py-2.5 rounded-lg text-sm transition-colors">
+              <a
+                href={event.websiteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass hover:bg-surface-light/60 text-text font-medium px-6 py-3 rounded-xl text-sm transition-all duration-300 hover:scale-105"
+              >
                 🌐 Website Resmi
               </a>
             )}
@@ -100,8 +121,8 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
 
 function InfoRow({ icon, label, value }: { icon: string; label: string; value: string }) {
   return (
-    <div className="flex items-start gap-3 p-3 bg-surface-light/50 rounded-lg">
-      <span className="text-lg">{icon}</span>
+    <div className="flex items-start gap-3 p-4 glass-light rounded-xl group hover:bg-surface-light/30 transition-colors duration-300">
+      <span className="text-lg group-hover:scale-110 transition-transform duration-300">{icon}</span>
       <div>
         <p className="text-xs text-text-muted">{label}</p>
         <p className="text-sm text-text font-medium">{value}</p>

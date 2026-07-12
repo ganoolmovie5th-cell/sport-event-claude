@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { events } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: 'Tentang SportEvent ID',
@@ -6,13 +7,40 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  const totalEvents = events.length;
+  const sports = new Set(events.map(e => e.sport)).size;
+  const cities = new Set(events.map(e => e.city)).size;
+
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-text mb-6">Tentang SportEvent ID</h1>
+      <div className="text-center mb-10">
+        <h1 className="text-3xl sm:text-4xl font-bold text-text mb-3">Tentang SportEvent ID</h1>
+        <p className="text-text-muted">Platform informasi olahraga terlengkap di Indonesia</p>
+      </div>
 
-      <div className="space-y-8">
-        <section className="bg-surface border border-border rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-text mb-4">🏆 Apa itu SportEvent ID?</h2>
+      {/* Stats about the platform */}
+      <div className="grid grid-cols-3 gap-3 mb-10">
+        <div className="glass rounded-xl p-5 text-center card-hover">
+          <p className="text-3xl font-bold text-primary-light tabular-nums">{totalEvents}</p>
+          <p className="text-xs text-text-muted mt-1">Total Event</p>
+        </div>
+        <div className="glass rounded-xl p-5 text-center card-hover">
+          <p className="text-3xl font-bold text-secondary tabular-nums">{sports}</p>
+          <p className="text-xs text-text-muted mt-1">Cabang Olahraga</p>
+        </div>
+        <div className="glass rounded-xl p-5 text-center card-hover">
+          <p className="text-3xl font-bold text-accent tabular-nums">{cities}</p>
+          <p className="text-xs text-text-muted mt-1">Kota</p>
+        </div>
+      </div>
+
+      <div className="space-y-6">
+        {/* What is SportEvent ID */}
+        <section className="glass rounded-2xl p-6 sm:p-8 card-hover">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">🏆</span>
+            <h2 className="text-xl font-semibold text-text">Apa itu SportEvent ID?</h2>
+          </div>
           <p className="text-text-muted leading-relaxed">
             SportEvent ID adalah platform informasi jadwal event olahraga di Indonesia dari tahun 2026 hingga 2030.
             Kami mengumpulkan data dari berbagai sumber untuk memberikan informasi terlengkap tentang event olahraga
@@ -20,52 +48,57 @@ export default function AboutPage() {
           </p>
         </section>
 
-        <section className="bg-surface border border-border rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-text mb-4">🎯 Tujuan</h2>
+        {/* Mission / Goals */}
+        <section className="glass rounded-2xl p-6 sm:p-8 card-hover">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">🎯</span>
+            <h2 className="text-xl font-semibold text-text">Tujuan</h2>
+          </div>
           <ul className="space-y-3 text-text-muted">
-            <li className="flex items-start gap-3">
-              <span className="text-primary-light mt-1">•</span>
-              <span>Menyediakan informasi jadwal event olahraga yang akurat dan terkini</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-primary-light mt-1">•</span>
-              <span>Membantu pecinta olahraga merencanakan kehadiran di event favorit</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-primary-light mt-1">•</span>
-              <span>Mempromosikan event olahraga di Indonesia ke audiens yang lebih luas</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-primary-light mt-1">•</span>
-              <span>Menjadi referensi lengkap untuk event olahraga Indonesia 2026-2030</span>
-            </li>
+            {[
+              'Menyediakan informasi jadwal event olahraga yang akurat dan terkini',
+              'Membantu pecinta olahraga merencanakan kehadiran di event favorit',
+              'Mempromosikan event olahraga di Indonesia ke audiens yang lebih luas',
+              'Menjadi referensi lengkap untuk event olahraga Indonesia 2026-2030',
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3">
+                <span className="w-6 h-6 rounded-full bg-primary/20 text-primary-light flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">{i + 1}</span>
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
         </section>
 
-        <section className="bg-surface border border-border rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-text mb-4">📋 Cakupan Event</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-surface-light rounded-lg p-4">
-              <h3 className="font-medium text-text mb-2">Event Internasional</h3>
-              <p className="text-sm text-text-muted">Asian Games, Olimpiade, MotoGP, BWF World Tour, FIFA World Cup, SEA Games</p>
-            </div>
-            <div className="bg-surface-light rounded-lg p-4">
-              <h3 className="font-medium text-text mb-2">Event Nasional</h3>
-              <p className="text-sm text-text-muted">PON, Liga 1, Proliga, IBL, Kejurnas berbagai cabor</p>
-            </div>
-            <div className="bg-surface-light rounded-lg p-4">
-              <h3 className="font-medium text-text mb-2">Marathon & Lari</h3>
-              <p className="text-sm text-text-muted">Jakarta Marathon, Bali Marathon, Borobudur Marathon, Jakarta 10K</p>
-            </div>
-            <div className="bg-surface-light rounded-lg p-4">
-              <h3 className="font-medium text-text mb-2">Motorsport</h3>
-              <p className="text-sm text-text-muted">MotoGP Mandalika, WSBK, Mandalika Racing Series</p>
-            </div>
+        {/* Feature highlights */}
+        <section className="glass rounded-2xl p-6 sm:p-8 card-hover">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">📋</span>
+            <h2 className="text-xl font-semibold text-text">Cakupan Event</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {[
+              { icon: '🌏', title: 'Event Internasional', desc: 'Asian Games, Olimpiade, MotoGP, BWF World Tour, FIFA World Cup, SEA Games' },
+              { icon: '🇮🇩', title: 'Event Nasional', desc: 'PON, Liga 1, Proliga, IBL, Kejurnas berbagai cabor' },
+              { icon: '🏃', title: 'Marathon & Lari', desc: 'Jakarta Marathon, Bali Marathon, Borobudur Marathon, Jakarta 10K' },
+              { icon: '🏎️', title: 'Motorsport', desc: 'MotoGP Mandalika, WSBK, Mandalika Racing Series' },
+            ].map((item) => (
+              <div key={item.title} className="glass-light rounded-xl p-4 group hover:bg-surface-light/40 transition-colors duration-300">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl group-hover:scale-110 transition-transform duration-300">{item.icon}</span>
+                  <h3 className="font-medium text-text text-sm">{item.title}</h3>
+                </div>
+                <p className="text-xs text-text-muted leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="bg-surface border border-border rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-text mb-4">⚠️ Disclaimer</h2>
+        {/* Disclaimer */}
+        <section className="glass rounded-2xl p-6 sm:p-8 border-l-4 border-l-accent">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">⚠️</span>
+            <h2 className="text-xl font-semibold text-text">Disclaimer</h2>
+          </div>
           <p className="text-text-muted leading-relaxed text-sm">
             Informasi jadwal, venue, dan harga tiket dapat berubah sewaktu-waktu. Kami berusaha memperbarui data
             secara berkala, namun kami sarankan untuk selalu mengecek informasi resmi dari penyelenggara event.

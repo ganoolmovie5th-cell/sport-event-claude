@@ -1,31 +1,68 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const links = [
+    { href: '/', label: 'Beranda' },
+    { href: '/events', label: 'Event' },
+    { href: '/calendar', label: 'Kalender' },
+    { href: '/about', label: 'Tentang' },
+  ];
+
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/';
+    return pathname.startsWith(href);
+  };
 
   return (
-    <nav className="sticky top-0 z-50 bg-surface/80 backdrop-blur-md border-b border-border">
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
+      scrolled
+        ? 'bg-surface/70 backdrop-blur-xl border-b border-primary/10 shadow-lg shadow-background/50'
+        : 'bg-surface/50 backdrop-blur-md border-b border-border/50'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl">🏆</span>
-            <span className="text-lg font-bold text-primary-light">SportEvent</span>
-            <span className="text-xs bg-primary/20 text-primary-light px-2 py-0.5 rounded-full">ID</span>
+          <Link href="/" className="flex items-center gap-2 group">
+            <span className="text-2xl group-hover:scale-110 transition-transform duration-300">🏆</span>
+            <span className="text-lg font-bold gradient-text">SportEvent</span>
+            <span className="text-xs bg-primary/20 text-primary-light px-2 py-0.5 rounded-full border border-primary/30">ID</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-text-muted hover:text-text transition-colors">Beranda</Link>
-            <Link href="/events" className="text-text-muted hover:text-text transition-colors">Event</Link>
-            <Link href="/calendar" className="text-text-muted hover:text-text transition-colors">Kalender</Link>
-            <Link href="/about" className="text-text-muted hover:text-text transition-colors">Tentang</Link>
+          <div className="hidden md:flex items-center gap-1">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  isActive(link.href)
+                    ? 'text-primary-light'
+                    : 'text-text-muted hover:text-text hover:bg-surface-light/50'
+                }`}
+              >
+                {link.label}
+                {isActive(link.href) && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full" />
+                )}
+              </Link>
+            ))}
           </div>
 
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-text-muted hover:text-text"
+            className="md:hidden p-2 text-text-muted hover:text-text rounded-lg hover:bg-surface-light/50 transition-colors"
             aria-label="Menu"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,12 +77,22 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-border bg-surface">
-          <div className="px-4 py-3 space-y-2">
-            <Link href="/" onClick={() => setOpen(false)} className="block py-2 text-text-muted hover:text-text">Beranda</Link>
-            <Link href="/events" onClick={() => setOpen(false)} className="block py-2 text-text-muted hover:text-text">Event</Link>
-            <Link href="/calendar" onClick={() => setOpen(false)} className="block py-2 text-text-muted hover:text-text">Kalender</Link>
-            <Link href="/about" onClick={() => setOpen(false)} className="block py-2 text-text-muted hover:text-text">Tentang</Link>
+        <div className="md:hidden border-t border-border/50 glass">
+          <div className="px-4 py-3 space-y-1">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className={`block py-2.5 px-3 rounded-lg transition-colors ${
+                  isActive(link.href)
+                    ? 'text-primary-light bg-primary/10'
+                    : 'text-text-muted hover:text-text hover:bg-surface-light/50'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       )}

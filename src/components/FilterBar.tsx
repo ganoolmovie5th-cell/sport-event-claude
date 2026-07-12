@@ -28,22 +28,33 @@ export default function FilterBar({
 
   return (
     <div className="space-y-4">
-      <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted">🔍</span>
+      {/* Search input with glass effect */}
+      <div className="relative group">
+        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted transition-colors group-focus-within:text-primary-light">🔍</span>
         <input
           type="text"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Cari event olahraga..."
-          className="w-full bg-surface border border-border rounded-lg pl-10 pr-4 py-3 text-text placeholder:text-text-muted focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-colors"
+          className="w-full glass rounded-xl pl-11 pr-4 py-3.5 text-text placeholder:text-text-muted/70 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/50 transition-all duration-300"
         />
+        {search && (
+          <button
+            onClick={() => onSearchChange('')}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text p-1 rounded-full hover:bg-surface-light/50 transition-all"
+            aria-label="Hapus pencarian"
+          >
+            ✕
+          </button>
+        )}
       </div>
 
+      {/* Dropdown filters */}
       <div className="flex flex-wrap gap-2">
         <select
           value={sport}
           onChange={(e) => onSportChange(e.target.value)}
-          className="bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:border-primary/50"
+          className="glass rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
         >
           <option value="">Semua Olahraga</option>
           {sports.map((s) => (
@@ -54,7 +65,7 @@ export default function FilterBar({
         <select
           value={year}
           onChange={(e) => onYearChange(e.target.value)}
-          className="bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:border-primary/50"
+          className="glass rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
         >
           <option value="">Semua Tahun</option>
           {years.map((y) => (
@@ -65,7 +76,7 @@ export default function FilterBar({
         <select
           value={city}
           onChange={(e) => onCityChange(e.target.value)}
-          className="bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:border-primary/50"
+          className="glass rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
         >
           <option value="">Semua Kota</option>
           {cities.map((c) => (
@@ -76,7 +87,7 @@ export default function FilterBar({
         <select
           value={status}
           onChange={(e) => onStatusChange(e.target.value)}
-          className="bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:border-primary/50"
+          className="glass rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
         >
           <option value="">Semua Status</option>
           <option value="confirmed">Confirmed</option>
@@ -85,15 +96,16 @@ export default function FilterBar({
         </select>
       </div>
 
+      {/* Pill-shaped sport chips */}
       <div className="flex flex-wrap gap-2">
         {sports.slice(0, 8).map((s) => (
           <button
             key={s}
             onClick={() => onSportChange(sport === s ? '' : s)}
-            className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
+            className={`text-xs px-4 py-2 rounded-full font-medium transition-all duration-300 ${
               sport === s
-                ? 'bg-primary/20 border-primary text-primary-light'
-                : 'border-border text-text-muted hover:border-primary/30'
+                ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-md shadow-primary/20 scale-105'
+                : 'glass text-text-muted hover:text-text hover:scale-105'
             }`}
           >
             {SPORT_EMOJI[s]} {SPORT_LABELS[s]}
