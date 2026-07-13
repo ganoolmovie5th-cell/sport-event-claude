@@ -1,0 +1,226 @@
+name: 🏅 Daily Sport Event Monitor & Auto-PR
+
+on:
+  # Tiap hari jam 02:00 WIB = 19:00 UTC (hari sebelumnya)
+  schedule:
+    - cron: "0 19 * * *"
+
+  # Bisa dijalankan manual dari tab Actions
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (scrape + report, tidak buat PR & tidak kirim email)"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # JOB 1: Scrape semua sumber & kirim email report
+  # ──────────────────────────────────────────────────────────────────────────
+  monitor-and-report:
+    name: 🕷️ Scrape & Email Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: 🐍 Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: 📦 Install dependencies
+        run: pip install --upgrade pip && pip install -r requirements.txt
+
+      - name: 🕷️ Run monitoring scraper
+        run: python scraper.py
+
+      - name: 📧 Send email report
+        if: github.event.inputs.dry_run != 'true'
+        run: python email_reporter.py
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+
+      - name: 📎 Upload scraper report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraper-report-${{ github.run_number }}
+          path: |
+            scraper_report.json
+            scraper_report.html
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: 📊 Job Summary
+        run: |
+          echo "## 🕷️ Scraper Report" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Scraper selesai — laporan dikirim ke email admin" >> $GITHUB_STEP_SUMMARY
+          echo "🕐 **Waktu:** $(TZ='Asia/Jakarta' date '+%d %b %Y %H:%M WIB')" >> $GITHUB_STEP_SUMMARY
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # JOB 2: Filter HIGH confidence → update data.ts → buat PR
+  # ──────────────────────────────────────────────────────────────────────────
+  auto-update-pr:
+    name: 🤖 Auto Update data.ts & Create PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: monitor-and-report
+
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐍 Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: 📦 Install dependencies
+        run: pip install --upgrade pip && pip install -r requirements.txt
+
+      - name: 📥 Download scraper report dari Job 1
+        uses: actions/download-artifact@v4
+        with:
+          name: scraper-report-${{ github.run_number }}
+          path: .
+
+      - name: 🤖 Run auto_updater
+        id: updater
+        run: |
+          python auto_updater.py
+          if git diff --quiet src/lib/data.ts; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Tidak ada perubahan pada data.ts"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "data.ts berubah — akan buat PR"
+          fi
+
+      - name: 📋 Read update summary
+        id: summary
+        if: steps.updater.outputs.changed == 'true'
+        run: |
+          ADDED=$(python3 -c "import json; d=json.load(open('auto_update_summary.json')); print(d.get('added_count', 0))")
+          EVENTS=$(python3 -c "
+          import json
+          d = json.load(open('auto_update_summary.json'))
+          lines = []
+          for item in d.get('added', []):
+              title  = item.get('title','?')
+              source = item.get('source','?')
+              date   = item.get('date','TBA')
+              venue  = item.get('venue','TBA')
+              url    = item.get('url','')
+              lines.append(f'- **{title}** | {date} | {venue} | [{source}]({url})')
+          print('\n'.join(lines))
+          ")
+          echo "added_count=$ADDED" >> $GITHUB_OUTPUT
+          echo "$EVENTS" > /tmp/events_list.txt
+
+      - name: 🔧 Setup git config
+        if: steps.updater.outputs.changed == 'true'
+        run: |
+          git config user.name "SportEvent Bot"
+          git config user.email "bot@sport-event.web.id"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: 🌿 Create branch & commit
+        id: branch
+        if: steps.updater.outputs.changed == 'true'
+        run: |
+          DATE=$(TZ='Asia/Jakarta' date '+%Y%m%d-%H%M')
+          BRANCH="auto-update/events-${DATE}"
+          git checkout -b "$BRANCH"
+          git add src/lib/data.ts auto_update_summary.json
+          git commit -m "feat(auto): tambah ${{ steps.summary.outputs.added_count }} event baru (HIGH confidence) — $DATE"
+          git push origin "$BRANCH"
+          echo "branch=$BRANCH" >> $GITHUB_OUTPUT
+
+      - name: 📬 Create Pull Request
+        if: steps.updater.outputs.changed == 'true' && github.event.inputs.dry_run != 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs         = require('fs');
+            const eventsList = fs.readFileSync('/tmp/events_list.txt', 'utf8').trim();
+            const addedCount = '${{ steps.summary.outputs.added_count }}';
+            const branch     = '${{ steps.branch.outputs.branch }}';
+            const date       = new Date().toLocaleDateString('id-ID', {
+              timeZone: 'Asia/Jakarta', day: 'numeric', month: 'long', year: 'numeric'
+            });
+
+            const body = `## 🤖 Auto-Update Sport Event — ${date}
+
+            > **${addedCount} event baru** terdeteksi dari sumber HIGH confidence.
+            > Data sudah di-inject ke \`src/lib/data.ts\` dengan status \`tentative\`. **Review sebelum merge.**
+
+            ---
+
+            ### 🏅 Event yang ditambahkan:
+
+            ${eventsList || '_Tidak ada event_'}
+
+            ---
+
+            ### ✅ Checklist sebelum merge:
+            - [ ] Verifikasi nama event sudah benar
+            - [ ] Cek tanggal startDate & endDate akurat (format YYYY-MM-DD)
+            - [ ] Update venue & city jika diperlukan
+            - [ ] Update \`status\` dari \`tentative\` → \`confirmed\` jika sudah resmi
+            - [ ] Update \`priceRange\` & \`ticketUrl\` jika tersedia
+            - [ ] Hapus prefix \`[AUTO-DETECTED]\` dari description setelah diverifikasi
+
+            ---
+
+            > ⚠️ Data ini auto-generated. Selalu verifikasi ke sumber asli sebelum merge ke main.
+            > 🤖 Generated by SportEvent ID Auto-Scraper`;
+
+            const pr = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              title: `🤖 Auto: Tambah ${addedCount} event baru — ${date}`,
+              body:  body,
+              head:  branch,
+              base:  'main',
+            });
+
+            try {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo:  context.repo.repo,
+                issue_number: pr.data.number,
+                labels: ['auto-update', 'needs-review'],
+              });
+            } catch (e) {
+              console.log('Label tidak tersedia, skip:', e.message);
+            }
+
+            console.log(`✅ PR dibuat: ${pr.data.html_url}`);
+
+      - name: 📊 Job Summary
+        run: |
+          echo "## 🤖 Auto Updater Report" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.updater.outputs.changed }}" == "true" ]; then
+            echo "✅ **${{ steps.summary.outputs.added_count }} event baru** ditambahkan ke data.ts" >> $GITHUB_STEP_SUMMARY
+            echo "🌿 **Branch:** \`${{ steps.branch.outputs.branch }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "📬 **PR** sudah dibuat — tunggu review kamu sebelum merge ke main" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ Tidak ada event baru yang lolos filter HIGH confidence hari ini" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "🕐 **Waktu:** $(TZ='Asia/Jakarta' date '+%d %b %Y %H:%M WIB')" >> $GITHUB_STEP_SUMMARY
