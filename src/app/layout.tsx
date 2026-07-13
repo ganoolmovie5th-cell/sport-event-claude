@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://sport-event.web.id'),
   title: {
     default: 'SportEvent ID - Jadwal Event Olahraga Indonesia 2026-2030',
     template: '%s | SportEvent ID',
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'SportEvent ID - Jadwal Event Olahraga Indonesia 2026-2030',
     description: 'Platform informasi jadwal lengkap event olahraga di Indonesia dari 2026 hingga 2030.',
+    url: 'https://sport-event.web.id',
     type: 'website',
     locale: 'id_ID',
   },
