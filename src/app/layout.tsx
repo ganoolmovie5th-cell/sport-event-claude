@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   },
   description: 'Platform informasi jadwal lengkap event olahraga di Indonesia dari 2026 hingga 2030. MotoGP, Badminton, Marathon, Liga 1, Asian Games, dan lainnya.',
   keywords: ['event olahraga', 'indonesia', 'jadwal', 'motogp', 'badminton', 'marathon', 'liga 1', 'asian games'],
+  verification: {
+    google: 'EG6z2dxpC1qiHNLqVF2ne6aDrBP4SvXKwi0fGr_e2ro',
+  },
   openGraph: {
     title: 'SportEvent ID - Jadwal Event Olahraga Indonesia 2026-2030',
     description: 'Platform informasi jadwal lengkap event olahraga di Indonesia dari 2026 hingga 2030.',
