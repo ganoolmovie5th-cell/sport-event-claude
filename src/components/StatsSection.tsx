@@ -28,7 +28,7 @@ export default function StatsSection() {
               />
 
               <div className="relative text-center">
-                <span className="text-4xl block mb-2 group-hover:scale-110 transition-transform duration-300 animate-float-slow" style={{ animationDelay: `${index * 0.3}s` }}>
+                <span className="text-4xl block mb-2 group-hover:scale-110 transition-transform duration-300">
                   {SPORT_EMOJI[sport as keyof typeof SPORT_EMOJI]}
                 </span>
                 <p className="text-2xl font-bold text-primary-light tabular-nums mb-1">{count}</p>
