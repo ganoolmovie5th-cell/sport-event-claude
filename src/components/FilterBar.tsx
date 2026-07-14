@@ -1,6 +1,6 @@
 'use client';
 
-import { Sport, SPORT_EMOJI, SPORT_LABELS, getAllSports, getAllYears, getAllCities } from '@/lib/data';
+import { SPORT_EMOJI, SPORT_LABELS, getAllSports, getAllYears, getAllCities } from '@/lib/data';
 
 interface FilterBarProps {
   search: string;
@@ -94,23 +94,6 @@ export default function FilterBar({
           <option value="tentative">Tentative</option>
           <option value="completed">Selesai</option>
         </select>
-      </div>
-
-      {/* Pill-shaped sport chips */}
-      <div className="flex flex-wrap gap-2">
-        {sports.slice(0, 8).map((s) => (
-          <button
-            key={s}
-            onClick={() => onSportChange(sport === s ? '' : s)}
-            className={`text-xs px-4 py-2 rounded-full font-medium transition-all duration-300 ${
-              sport === s
-                ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-md shadow-primary/20 scale-105'
-                : 'glass text-text-muted hover:text-text hover:scale-105'
-            }`}
-          >
-            {SPORT_EMOJI[s]} {SPORT_LABELS[s]}
-          </button>
-        ))}
       </div>
     </div>
   );
