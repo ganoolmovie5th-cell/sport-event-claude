@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 @theme inline {
   --color-background: #0f0a1e;
@@ -16,10 +17,31 @@
   --font-sans: var(--font-outfit, 'Outfit'), system-ui, -apple-system, sans-serif;
 }
 
+/* Light theme override */
+[data-theme="light"] {
+  --color-background: #f5f3ff;
+  --color-surface: #ffffff;
+  --color-surface-light: #ede9fe;
+  --color-text: #1e1b4b;
+  --color-text-muted: #6b7280;
+  --color-border: #ddd6fe;
+}
+
+[data-theme="light"] .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+[data-theme="light"] .glass-light {
+  background: rgba(237, 233, 254, 0.6);
+  border-color: rgba(139, 92, 246, 0.15);
+}
+
 body {
   background-color: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-sans);
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* ============================================

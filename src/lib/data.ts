@@ -20,6 +20,7 @@ export interface SportEvent {
   tags: string[];
   athletes?: string;
   organizer?: string;
+  highlights?: string[];
 }
 
 export const SPORT_EMOJI: Record<Sport, string> = {
@@ -81,6 +82,12 @@ export const events: SportEvent[] = [
     tags: ['BWF', 'Super 500', 'World Tour'],
     athletes: 'Tim Indonesia',
     organizer: 'PBSI',
+    highlights: [
+      'Turnamen pembuka musim BWF World Tour 2026',
+      'Kategori Super 500 dengan poin ranking dunia penuh',
+      'Digelar di Istora Senayan, arena bulu tangkis paling ikonik di Indonesia',
+      'Tim Indonesia ditargetkan raih minimal 2 gelar juara',
+    ],
   },
   {
     id: '2',
@@ -120,6 +127,12 @@ export const events: SportEvent[] = [
     imageEmoji: '🏃',
     tags: ['Marathon', 'Running', 'Jakarta'],
     organizer: 'Jakarta Marathon Foundation',
+    highlights: [
+      'Rute melewati Monas, Bundaran HI, dan Kota Tua Jakarta',
+      '3 kategori: Full Marathon (42km), Half Marathon (21km), dan 10K',
+      'Lebih dari 10.000 pelari dari 50+ negara',
+      'Finisher medal eksklusif dan goody bag resmi',
+    ],
   },
   {
     id: '4',
@@ -141,6 +154,12 @@ export const events: SportEvent[] = [
     tags: ['BWF', 'Super 1000', 'World Tour'],
     athletes: 'Tim Indonesia',
     organizer: 'PBSI',
+    highlights: [
+      'Turnamen BWF Super 1000 — level tertinggi di World Tour',
+      'Total hadiah jutaan dolar AS untuk para pemenang',
+      'Kevin/Marcus dan Fajar/Rian jadi andalan ganda putra Indonesia',
+      'Tiket final selalu sold out dalam hitungan jam',
+    ],
   },
   {
     id: '5',
@@ -160,6 +179,12 @@ export const events: SportEvent[] = [
     tags: ['Asian Games', 'Multi Sport', 'Jepang'],
     athletes: 'Tim Indonesia',
     organizer: 'OCA',
+    highlights: [
+      '45 cabang olahraga diperebutkan selama 16 hari',
+      'Indonesia targetkan masuk 5 besar perolehan medali',
+      'Bulu tangkis, angkat besi, dan pencak silat jadi andalan emas',
+      'Digelar di Aichi-Nagoya, Jepang',
+    ],
   },
   {
     id: '6',
@@ -180,6 +205,12 @@ export const events: SportEvent[] = [
     imageEmoji: '🏍️',
     tags: ['MotoGP', 'Mandalika', 'Lombok'],
     organizer: 'Dorna Sports / MGPA',
+    highlights: [
+      'Satu-satunya sirkuit MotoGP di Indonesia dengan pemandangan pantai',
+      '3 hari penuh hiburan: FP, Qualifying, Sprint Race, dan Main Race',
+      'Kapasitas 150.000 penonton per hari di tribun dan hillstand',
+      'Rider top dunia: Marquez, Bagnaia, Martin, dan Quartararo',
+    ],
   },
   {
     id: '7',
@@ -199,6 +230,12 @@ export const events: SportEvent[] = [
     tags: ['FIFA', 'World Cup', 'Piala Dunia'],
     athletes: 'Timnas Indonesia',
     organizer: 'FIFA',
+    highlights: [
+      'Pertama kalinya Indonesia berpotensi tampil di Piala Dunia FIFA',
+      'Format baru: 48 tim dari seluruh dunia berpartisipasi',
+      'Digelar di 3 negara: USA, Meksiko, dan Kanada',
+      'Shin Tae-yong memimpin skuad Garuda menuju panggung dunia',
+    ],
   },
   {
     id: '8',

@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { Outfit } from 'next/font/google';
 import './globals.css';
+import ClientShell from '@/components/ClientShell';
+import Footer from '@/components/Footer';
+import { Analytics } from '@vercel/analytics/next';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -9,9 +12,6 @@ const outfit = Outfit({
   variable: '--font-outfit',
   display: 'swap',
 });
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://sport-event.web.id'),
@@ -33,11 +33,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id" className={outfit.variable}>
       <head>
@@ -55,15 +51,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </head>
       <body className="min-h-screen flex flex-col">
         <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WLTFVQZ6"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
+          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WLTFVQZ6"
+            height="0" width="0" style={{ display: 'none', visibility: 'hidden' }} />
         </noscript>
-        <Navbar />
-        <main className="flex-1">{children}</main>
+        <ClientShell>{children}</ClientShell>
         <Footer />
         <Analytics />
       </body>
