@@ -15,8 +15,10 @@ Platform informasi jadwal event olahraga di Indonesia dari 2026 hingga 2030.
 ## Fitur
 
 - 🏠 **Beranda** — Hero section, event terdekat, statistik per cabor
-- 📋 **Daftar Event** — 50+ event dengan pencarian & filter (olahraga/tahun/kota/status)
-- 📄 **Detail Event** — Info lengkap: tanggal, venue, harga, link tiket
+- 📋 **Daftar Event** — 50+ event dengan pencarian & filter (olahraga/tahun/kota/status/promotor)
+- 🔴 **Live Feed Status** — Badge On-Sale/Live/Selesai per event
+- 📍 **Map Clustering** — Event locations peta dengan clustering by city
+- 📄 **Detail Event** — Info lengkap: tanggal, venue, harga, link tiket + structured data JSON-LD
 - 📅 **Kalender** — Tampilan kalender bulanan dengan navigasi tahun
 - ℹ️ **Tentang** — Informasi platform
 - 🤖 **Semi-Auto Scraper** — Update harian otomatis via GitHub Actions
