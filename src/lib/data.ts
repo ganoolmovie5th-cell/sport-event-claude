@@ -1033,6 +1033,10 @@ export function getAllSports(): Sport[] {
   return [...new Set(events.map((e) => e.sport))].sort();
 }
 
+export function getAllOrganizers(): string[] {
+  return [...new Set(events.filter((e) => e.organizer).map((e) => e.organizer!))].sort();
+}
+
 export function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('id-ID', {
     day: 'numeric',

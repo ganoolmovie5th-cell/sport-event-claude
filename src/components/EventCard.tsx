@@ -13,6 +13,10 @@ export default function EventCard({ event }: { event: SportEvent }) {
     completed: { cls: 'bg-text-muted/15 text-text-muted border-text-muted/20', label: 'Selesai'     },
   }[event.status];
 
+  const isUpcoming = new Date(event.startDate) > new Date();
+  const feedStatus = isUpcoming ? 'On-Sale' : (event.status === 'completed' ? 'Selesai' : 'Live');
+  const feedCls = isUpcoming ? 'bg-green-500/15 text-green-400 border-green-500/25' : event.status === 'completed' ? 'bg-text-muted/15 text-text-muted border-text-muted/20' : 'bg-red-500/15 text-red-400 border-red-500/25 animate-pulse';
+
   const categoryLabel = {
     international: 'Internasional',
     national:      'Nasional',
@@ -30,9 +34,14 @@ export default function EventCard({ event }: { event: SportEvent }) {
         {/* Top row: emoji + status */}
         <div className="flex items-start justify-between mb-4">
           <span className="text-2xl">{SPORT_EMOJI[event.sport]}</span>
-          <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-medium border ${statusConfig.cls}`}>
-            {statusConfig.label}
-          </span>
+          <div className="flex flex-col gap-1.5 items-end">
+            <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-medium border ${statusConfig.cls}`}>
+              {statusConfig.label}
+            </span>
+            <span className={`text-[9px] px-2 py-0.5 rounded-full font-medium border ${feedCls}`}>
+              {feedStatus}
+            </span>
+          </div>
         </div>
 
         {/* Title */}

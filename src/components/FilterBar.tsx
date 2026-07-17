@@ -1,6 +1,6 @@
 'use client';
 
-import { SPORT_EMOJI, SPORT_LABELS, getAllSports, getAllYears, getAllCities } from '@/lib/data';
+import { SPORT_EMOJI, SPORT_LABELS, getAllSports, getAllYears, getAllCities, getAllOrganizers } from '@/lib/data';
 
 interface FilterBarProps {
   search: string;
@@ -13,6 +13,8 @@ interface FilterBarProps {
   onCityChange: (v: string) => void;
   status: string;
   onStatusChange: (v: string) => void;
+  organizer: string;
+  onOrganizerChange: (v: string) => void;
 }
 
 export default function FilterBar({
@@ -21,10 +23,12 @@ export default function FilterBar({
   year, onYearChange,
   city, onCityChange,
   status, onStatusChange,
+  organizer, onOrganizerChange,
 }: FilterBarProps) {
   const sports = getAllSports();
   const years = getAllYears();
   const cities = getAllCities();
+  const organizers = getAllOrganizers();
 
   return (
     <div className="space-y-4">
@@ -93,6 +97,17 @@ export default function FilterBar({
           <option value="confirmed">Confirmed</option>
           <option value="tentative">Tentative</option>
           <option value="completed">Selesai</option>
+        </select>
+
+        <select
+          value={organizer}
+          onChange={(e) => onOrganizerChange(e.target.value)}
+          className="glass rounded-lg px-3 py-2 text-sm text-text focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+        >
+          <option value="">Semua Promotor</option>
+          {organizers.map((o) => (
+            <option key={o} value={o}>{o}</option>
+          ))}
         </select>
       </div>
     </div>

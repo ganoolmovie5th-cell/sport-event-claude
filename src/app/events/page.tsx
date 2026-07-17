@@ -14,6 +14,7 @@ export default function EventsPage() {
   const [year, setYear]     = useState('');
   const [city, setCity]     = useState('');
   const [status, setStatus] = useState('');
+  const [organizer, setOrganizer] = useState('');
   const [view, setView]     = useState<'list' | 'map'>('list');
 
   const filtered = useMemo(() => {
@@ -23,9 +24,10 @@ export default function EventsPage() {
       if (year && new Date(e.startDate).getFullYear() !== Number(year)) return false;
       if (city && e.city !== city) return false;
       if (status && e.status !== status) return false;
+      if (organizer && e.organizer?.toLowerCase() !== organizer.toLowerCase()) return false;
       return true;
     }).sort((a, b) => a.startDate.localeCompare(b.startDate));
-  }, [search, sport, year, city, status]);
+  }, [search, sport, year, city, status, organizer]);
 
   function handleCitySelect(selectedCity: string) {
     setCity(selectedCity);
@@ -57,6 +59,7 @@ export default function EventsPage() {
         year={year}     onYearChange={setYear}
         city={city}     onCityChange={setCity}
         status={status} onStatusChange={setStatus}
+        organizer={organizer} onOrganizerChange={setOrganizer}
       />
 
       {view === 'map' ? (
