@@ -5,7 +5,8 @@
   --color-background: #0f0a1e;
   --color-surface: #1a1230;
   --color-surface-light: #241a40;
-  --color-primary: #8b5cf6;
+  /* #8b5cf6 only gave white text 4.2:1 — darkened to clear the 4.5:1 AA floor */
+  --color-primary: #7331dd;
   --color-primary-light: #a78bfa;
   --color-secondary: #7c3aed;
   --color-accent: #f59e0b;
