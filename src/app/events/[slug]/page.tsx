@@ -1,56 +1,10 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { events, getEventBySlug, formatDate, SPORT_EMOJI, SPORT_LABELS, type SportEvent } from '@/lib/data';
+import { events, getEventBySlug, formatDate, SPORT_EMOJI, SPORT_LABELS } from '@/lib/data';
 import { googleCalendarUrl } from '@/lib/googleCalendar';
 import CountdownTimer from '@/components/CountdownTimer';
-
-const SITE_URL = 'https://sport-event.web.id';
-
-// priceRange is display prose ("Rp 150.000 - Rp 2.000.000"), not a number, so offers
-// carries only the ticket URL. Never emit offers as [] — an empty array fails Google's
-// required-field check exactly as hard as omitting the key.
-function eventJsonLd(event: SportEvent) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'SportsEvent',
-    name: event.title,
-    description: event.description,
-    startDate: event.startDate,
-    endDate: event.endDate,
-    eventStatus:
-      event.status === 'completed'
-        ? 'https://schema.org/EventScheduled'
-        : event.status === 'tentative'
-          ? 'https://schema.org/EventPostponed'
-          : 'https://schema.org/EventScheduled',
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-    sport: SPORT_LABELS[event.sport],
-    url: `${SITE_URL}/events/${event.slug}`,
-    location: {
-      '@type': 'Place',
-      name: event.venue,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: event.city,
-        addressCountry: event.country,
-      },
-    },
-    organizer: event.organizer
-      ? { '@type': 'Organization', name: event.organizer, url: event.websiteUrl || SITE_URL }
-      : { '@type': 'Organization', name: 'Sport Event Indonesia', url: SITE_URL },
-    ...(event.ticketUrl && {
-      offers: {
-        '@type': 'Offer',
-        url: event.ticketUrl,
-        availability:
-          event.status === 'completed'
-            ? 'https://schema.org/SoldOut'
-            : 'https://schema.org/InStock',
-      },
-    }),
-  };
-}
+import { SITE_URL, eventJsonLd } from '@/lib/eventJsonLd';
 
 export function generateStaticParams() {
   return events.map((e) => ({ slug: e.slug }));
@@ -84,7 +38,9 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd(event)) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({ '@context': 'https://schema.org', ...eventJsonLd(event) }),
+        }}
       />
       <Link href="/events" className="inline-flex items-center gap-2 text-text-muted hover:text-primary-light text-sm mb-6 transition-all duration-300 group">
         <span className="group-hover:-translate-x-1 transition-transform duration-300">←</span>

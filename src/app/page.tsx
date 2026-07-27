@@ -2,13 +2,46 @@ import HeroSection from '@/components/HeroSection';
 import StatsSection from '@/components/StatsSection';
 import EventCard from '@/components/EventCard';
 import { getUpcomingEvents } from '@/lib/data';
+import { SITE_URL, OG_IMAGE, eventJsonLd } from '@/lib/eventJsonLd';
 import Link from 'next/link';
+
+// The homepage carried no structured data at all, so Rich Results reported
+// "No items detected". Emit the upcoming events as full SportsEvent nodes —
+// an ItemList of bare URLs is not a rich-result type Google reports on.
+// Lives here rather than in layout.tsx so event nodes don't leak onto every route.
+const homeJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'SportEvent ID',
+      description:
+        'Jadwal lengkap event olahraga di Indonesia dari 2026 hingga 2030: MotoGP, Badminton, Marathon, Liga 1, Asian Games, dan lainnya.',
+      inLanguage: 'id-ID',
+      publisher: { '@id': `${SITE_URL}/#organization` },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#organization`,
+      name: 'SportEvent ID',
+      url: SITE_URL,
+      logo: { '@type': 'ImageObject', url: OG_IMAGE },
+    },
+    ...getUpcomingEvents().slice(0, 12).map(eventJsonLd),
+  ],
+};
 
 export default function HomePage() {
   const upcoming = getUpcomingEvents().slice(0, 6);
 
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+      />
       <HeroSection />
 
       <section className="py-16">

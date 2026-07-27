@@ -84,7 +84,8 @@ export default function Navbar({ onSearchOpen }: { onSearchOpen?: () => void }) 
               className="flex items-center gap-2 px-3 py-1.5 glass rounded-lg text-sm text-text-muted hover:text-text transition-colors"
               aria-label="Cari event">
               <span>🔍</span>
-              <span className="hidden sm:inline text-xs opacity-60">⌘K</span>
+              {/* opacity-60 blended text-muted down to 2.63:1 over the glass navbar */}
+              <span className="hidden sm:inline text-xs">⌘K</span>
             </button>
 
             <button onClick={toggleTheme}

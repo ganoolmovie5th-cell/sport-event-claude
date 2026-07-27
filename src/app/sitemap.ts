@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { events } from '@/lib/data';
 
-const SITE_URL = 'https://sport-event.web.id';
+const SITE_URL = 'https://www.sport-event.web.id';
 
 // Generated, not static: scraper.py keeps adding events, and a hardcoded
 // public/sitemap.xml silently goes stale every time it does.

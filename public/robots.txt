@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sport-event.web.id/sitemap.xml
+Sitemap: https://www.sport-event.web.id/sitemap.xml
