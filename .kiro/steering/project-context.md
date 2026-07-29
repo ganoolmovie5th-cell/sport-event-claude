@@ -115,7 +115,7 @@ Helper functions: `getEventBySlug`, `getUpcomingEvents`, `getAllCities`, `getAll
 
 ## SEO & Analytics
 
-- **metadataBase:** `https://sport-event.web.id`
+- **metadataBase:** `https://www.sport-event.web.id` — apex 308-redirect ke www, jadi selalu pakai www
 - **sitemap.ts:** dynamic sitemap via Next.js App Router → `/sitemap.xml`
 - **robots.ts:** dynamic robots.txt → `/robots.txt`
 - **public/sitemap.xml:** static backup sitemap

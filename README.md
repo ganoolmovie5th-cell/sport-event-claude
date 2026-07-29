@@ -2,7 +2,7 @@
 
 Platform informasi jadwal event olahraga di Indonesia dari 2026 hingga 2030.
 
-🌐 **Live:** [sport-event.web.id](https://sport-event.web.id)
+🌐 **Live:** [www.sport-event.web.id](https://www.sport-event.web.id)
 
 ## Tech Stack
 
