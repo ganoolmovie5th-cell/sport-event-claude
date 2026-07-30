@@ -147,6 +147,12 @@ npm run build   # harus sukses sebelum merge
 
 ---
 
+## Dependency Pin
+
+`package.json` punya blok `overrides` yang memaksa `sharp` ke `^0.35.3`. `sharp` datang sebagai optionalDependency `next` dan default-nya `0.34.5` (GHSA-f88m-g3jw-g9cj, vulnerable `< 0.35.0`). **Jangan hapus** `overrides` — alert Dependabot akan balik lagi.
+
+---
+
 ## Commit Convention
 
 ```
