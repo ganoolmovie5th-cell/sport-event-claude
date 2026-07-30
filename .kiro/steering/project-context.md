@@ -151,6 +151,10 @@ npm run build   # harus sukses sebelum merge
 
 `src/lib/eventJsonLd.ts` memakai `AggregateOffer` (`lowPrice`/`highPrice`/`priceCurrency: 'IDR'`) untuk event yang punya `priceRange`, hasil parse `parsePriceRange()`. Event tanpa `priceRange` pakai `Offer` biasa. **Jangan** tambahkan `validFrom` atau `price` tunggal dengan angka karangan — dataset tidak punya tanggal jual tiket maupun harga tunggal.
 
+## JSON-LD addressCountry
+
+Field `country` di `data.ts` adalah prosa Bahasa Indonesia untuk tampilan (`'Jepang'`), dan sebagian bukan negara (`'TBD'`, `'USA/Meksiko/Kanada'`). JSON-LD memetakannya lewat `COUNTRY_CODES` ke ISO 3166-1 alpha-2. **Jangan** kirim `event.country` mentah ke `addressCountry`. Kalau menambah event dengan negara baru, tambahkan juga entri di `COUNTRY_CODES` — kalau tidak, `addressCountry` sengaja dihapus (bukan diisi tebakan) dan `addressLocality` tetap bikin `address` valid.
+
 ---
 
 ## Dependency Pin

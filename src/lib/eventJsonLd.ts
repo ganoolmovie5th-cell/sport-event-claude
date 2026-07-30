@@ -6,6 +6,18 @@ export const SITE_URL = 'https://www.sport-event.web.id';
 // so this is the only crawlable image URL available for schema.org `image`.
 export const OG_IMAGE = `${SITE_URL}/opengraph-image`;
 
+// `country` in data.ts is display prose in Indonesian ("Jepang"), and a few rows
+// are not a country at all ("TBD", "USA/Meksiko/Kanada"). Google wants an ISO
+// 3166-1 alpha-2 code in addressCountry, so map the ones we can and omit the
+// field entirely for the rest — addressLocality still carries the city, so
+// `address` stays valid. Keep the display strings untouched.
+const COUNTRY_CODES: Record<string, string> = {
+  Indonesia: 'ID',
+  Jepang: 'JP',
+  Malaysia: 'MY',
+  USA: 'US',
+};
+
 // priceRange is display prose ("Rp 150.000 - Rp 2.000.000"). Google's Event rich
 // result wants a numeric price + priceCurrency, so parse the two ends into an
 // AggregateOffer (lowPrice/highPrice) — the schema.org type for a range — instead
@@ -51,7 +63,9 @@ export function eventJsonLd(event: SportEvent) {
       address: {
         '@type': 'PostalAddress',
         addressLocality: event.city,
-        addressCountry: event.country,
+        ...(COUNTRY_CODES[event.country] && {
+          addressCountry: COUNTRY_CODES[event.country],
+        }),
       },
     },
     // Google requires `performer`. `athletes` is free prose when present;

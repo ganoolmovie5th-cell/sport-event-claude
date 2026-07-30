@@ -129,6 +129,21 @@ Jalankan manual: GitHub → Actions → "Daily Sport Event Monitor" → Run work
 - **Google Search Console:** verified
 - **Google Tag Manager:** GTM-WLTFVQZ6
 
+## SEO: addressCountry pakai kode ISO (Juli 2026)
+
+GSC melaporkan `Cannot continue validation process` dengan 3 item contoh (Asian Games 2026, Asian Para Games 2026, Borobudur Marathon 2026). Pesan itu sendiri **bukan** error data — itu proses validasi GSC yang berhenti, biasanya karena markup halaman berubah saat validasi masih jalan. Tapi pengecekan menemukan bug nyata: field `country` di `data.ts` adalah prosa Bahasa Indonesia dan dikirim apa adanya sebagai `addressCountry`, padahal Google minta kode ISO 3166-1 alpha-2.
+
+| nilai `country` | jumlah | sebelumnya | sekarang |
+|---|---|---|---|
+| `Indonesia` | 43 | `"Indonesia"` | `"ID"` |
+| `Jepang` | 2 | `"Jepang"` (invalid) | `"JP"` |
+| `Malaysia` | 1 | `"Malaysia"` | `"MY"` |
+| `USA` | 1 | `"USA"` (bukan ISO) | `"US"` |
+| `TBD` | 2 | `"TBD"` (bukan negara) | field dihapus |
+| `USA/Meksiko/Kanada` | 1 | 3 negara dalam 1 string | field dihapus |
+
+Map `COUNTRY_CODES` di `src/lib/eventJsonLd.ts` hanya dipakai untuk JSON-LD — string tampilan di UI tidak diubah. Untuk nilai yang bukan negara, `addressCountry` dihapus dan `addressLocality` (kota) tetap ada, jadi `address` masih valid. Verifikasi build: 43 `ID`, 2 `JP`, 1 `MY`, 1 `US`, 3 tanpa `addressCountry` — total 50 halaman event.
+
 ## SEO: offers pakai AggregateOffer (Juli 2026)
 
 Rich Results Test melaporkan `missing field price`, `priceCurrency`, `validFrom` pada `offers`. Field `priceRange` di `data.ts` adalah prosa (`'Rp 150.000 - Rp 1.500.000'`), bukan angka, jadi sebelumnya cuma dikirim sebagai `description`. Sekarang `parsePriceRange()` di `src/lib/eventJsonLd.ts` mengurai kedua ujungnya jadi `AggregateOffer` dengan `lowPrice` + `highPrice` + `priceCurrency: 'IDR'` — tipe schema.org yang tepat untuk rentang harga, angkanya asli dari data (bukan karangan). Event tanpa `priceRange` tetap pakai `Offer` biasa. `validFrom` **tidak** ditambahkan: tanggal mulai penjualan tiket tidak ada di dataset, dan tanggal karangan lebih buruk daripada field recommended yang hilang. Hasil build: 25 dari 50 halaman event memuat `AggregateOffer`.
