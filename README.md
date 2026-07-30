@@ -155,3 +155,14 @@ Rich Results Test melaporkan `missing field price`, `priceCurrency`, `validFrom`
 ## License
 
 MIT
+
+## Security: bump next 16.2.11 + pin postcss ^8.5.18 (Juli 2026)
+
+Dependabot (baru diaktifkan) melaporkan 12 alert terbuka: 9 di `next`, 3 di `postcss`. Tidak ada lagi alert `sharp` — blok `overrides` sebelumnya sudah menutupnya.
+
+- `next` `16.2.10` → `16.2.11`. Ke-9 advisory (4 high, 5 medium) semuanya punya range `>= 16.0.0, < 16.2.11`, jadi satu patch bump menutup semuanya. `eslint-config-next` ikut disamakan versinya.
+- `postcss` transitif — lockfile memuat root `8.5.17` **dan** bundel `next` `8.4.31`, keduanya di dalam range vulnerable `<= 8.5.17`. Ditambahkan ke blok `overrides` sebagai `^8.5.18` supaya kedua salinan ikut naik dan ter-dedupe jadi satu.
+
+**Sisa yang sengaja tidak dikejar:** `brace-expansion` (high, DoS) lewat rantai `eslint` → `minimatch`. Itu devDependency, tidak masuk bundle produksi, dan `npm audit fix` menuntut `eslint@10` yang breaking. Ditunda sampai upgrade eslint dilakukan sendiri.
+
+Verifikasi: `npm run build` EXIT=0, 0 error.
