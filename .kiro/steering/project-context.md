@@ -147,6 +147,12 @@ npm run build   # harus sukses sebelum merge
 
 ---
 
+## JSON-LD offers
+
+`src/lib/eventJsonLd.ts` memakai `AggregateOffer` (`lowPrice`/`highPrice`/`priceCurrency: 'IDR'`) untuk event yang punya `priceRange`, hasil parse `parsePriceRange()`. Event tanpa `priceRange` pakai `Offer` biasa. **Jangan** tambahkan `validFrom` atau `price` tunggal dengan angka karangan — dataset tidak punya tanggal jual tiket maupun harga tunggal.
+
+---
+
 ## Dependency Pin
 
 `package.json` punya blok `overrides` yang memaksa `sharp` ke `^0.35.3`. `sharp` datang sebagai optionalDependency `next` dan default-nya `0.34.5` (GHSA-f88m-g3jw-g9cj, vulnerable `< 0.35.0`). **Jangan hapus** `overrides` — alert Dependabot akan balik lagi.

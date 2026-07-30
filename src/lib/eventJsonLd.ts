@@ -6,11 +6,30 @@ export const SITE_URL = 'https://www.sport-event.web.id';
 // so this is the only crawlable image URL available for schema.org `image`.
 export const OG_IMAGE = `${SITE_URL}/opengraph-image`;
 
-// priceRange is display prose ("Rp 150.000 - Rp 2.000.000"), not a number, so offers
-// carries only the ticket URL. Never emit offers as [] — an empty array fails Google's
-// required-field check exactly as hard as omitting the key. Events without a ticketUrl
-// fall back to the event page itself so `offers` is always present.
+// priceRange is display prose ("Rp 150.000 - Rp 2.000.000"). Google's Event rich
+// result wants a numeric price + priceCurrency, so parse the two ends into an
+// AggregateOffer (lowPrice/highPrice) — the schema.org type for a range — instead
+// of inventing a single number. Returns null if the string is not "Rp a - Rp b".
+function parsePriceRange(priceRange: string) {
+  const nums = priceRange.match(/\d[\d.]*/g);
+  if (!nums || nums.length < 2) return null;
+  const low = Number(nums[0].replace(/\./g, ''));
+  const high = Number(nums[nums.length - 1].replace(/\./g, ''));
+  if (!low || !high || high < low) return null;
+  return { low, high };
+}
+
+// Never emit offers as [] — an empty array fails Google's required-field check
+// exactly as hard as omitting the key. Events without a ticketUrl fall back to
+// the event page itself so `offers` is always present.
+// No validFrom: ticket on-sale dates are not in the dataset, and a guessed date
+// is worse than a missing recommended field.
 export function eventJsonLd(event: SportEvent) {
+  const range = event.priceRange ? parsePriceRange(event.priceRange) : null;
+  const offerUrl = event.ticketUrl || `${SITE_URL}/events/${event.slug}`;
+  const availability =
+    event.status === 'completed' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock';
+
   return {
     '@type': 'SportsEvent',
     '@id': `${SITE_URL}/events/${event.slug}#event`,
@@ -44,14 +63,20 @@ export function eventJsonLd(event: SportEvent) {
     organizer: event.organizer
       ? { '@type': 'Organization', name: event.organizer, url: event.websiteUrl || SITE_URL }
       : { '@type': 'Organization', name: 'Sport Event Indonesia', url: SITE_URL },
-    offers: {
-      '@type': 'Offer',
-      url: event.ticketUrl || `${SITE_URL}/events/${event.slug}`,
-      availability:
-        event.status === 'completed'
-          ? 'https://schema.org/SoldOut'
-          : 'https://schema.org/InStock',
-      ...(event.priceRange && { description: event.priceRange }),
-    },
+    offers: range
+      ? {
+          '@type': 'AggregateOffer',
+          url: offerUrl,
+          priceCurrency: 'IDR',
+          lowPrice: range.low,
+          highPrice: range.high,
+          availability,
+        }
+      : {
+          '@type': 'Offer',
+          url: offerUrl,
+          availability,
+          ...(event.priceRange && { description: event.priceRange }),
+        },
   };
 }

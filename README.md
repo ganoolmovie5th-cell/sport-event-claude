@@ -129,6 +129,10 @@ Jalankan manual: GitHub → Actions → "Daily Sport Event Monitor" → Run work
 - **Google Search Console:** verified
 - **Google Tag Manager:** GTM-WLTFVQZ6
 
+## SEO: offers pakai AggregateOffer (Juli 2026)
+
+Rich Results Test melaporkan `missing field price`, `priceCurrency`, `validFrom` pada `offers`. Field `priceRange` di `data.ts` adalah prosa (`'Rp 150.000 - Rp 1.500.000'`), bukan angka, jadi sebelumnya cuma dikirim sebagai `description`. Sekarang `parsePriceRange()` di `src/lib/eventJsonLd.ts` mengurai kedua ujungnya jadi `AggregateOffer` dengan `lowPrice` + `highPrice` + `priceCurrency: 'IDR'` — tipe schema.org yang tepat untuk rentang harga, angkanya asli dari data (bukan karangan). Event tanpa `priceRange` tetap pakai `Offer` biasa. `validFrom` **tidak** ditambahkan: tanggal mulai penjualan tiket tidak ada di dataset, dan tanggal karangan lebih buruk daripada field recommended yang hilang. Hasil build: 25 dari 50 halaman event memuat `AggregateOffer`.
+
 ## Security: pin sharp ^0.35.3 (Juli 2026)
 
 `sharp` masuk sebagai optionalDependency dari `next`, ter-hoist ke root `node_modules` pada versi `0.34.5` — kena GHSA-f88m-g3jw-g9cj (vulnerable `< 0.35.0`, patched `0.35.0`). Ditambah blok `overrides` di `package.json` supaya npm memaksa `^0.35.3`. Catatan: di Vercel `next/image` dilayani infrastruktur Image Optimization Vercel, jadi `sharp` tidak ada di request path — ini menutup alert lockfile, bukan exploit aktif. `npm run build` sukses.
