@@ -364,6 +364,99 @@ def scrape_marathons_ahotu() -> list[dict]:
     return found
 
 
+def scrape_bolasport() -> list[dict]:
+    """Bolasport.com — berita olahraga Indonesia."""
+    found = []
+    soup = fetch("https://www.bolasport.com/indonesian-football")
+    if soup:
+        for a in soup.select("a[href*='/read/']")[:20]:
+            title = a.get_text(strip=True)
+            if not title or len(title) < 10:
+                continue
+            if not any(k in title.lower() for k in ["jadwal", "indonesia", "liga", "piala", "turnamen", "sea games", "asian games"]):
+                continue
+            link = a.get("href", "")
+            if not link.startswith("http"):
+                link = "https://www.bolasport.com" + link
+            found.append({
+                "title": title, "url": link, "date": "", "venue": "",
+                "sport": "football",
+                "source": "bolasport.com", "source_label": "Bolasport",
+                "reliability": "MEDIUM",
+            })
+    log.info(f"bolasport: {len(found)} artikel")
+    return found
+
+
+def scrape_kompas_sport() -> list[dict]:
+    """Kompas Sport — media nasional kredibel."""
+    found = []
+    soup = fetch("https://www.kompas.com/sports")
+    if soup:
+        for a in soup.select("a.article__link, a[href*='/sports/read/']")[:20]:
+            title = a.get_text(strip=True)
+            if not title or len(title) < 10:
+                continue
+            if not any(k in title.lower() for k in ["jadwal", "indonesia", "piala", "turnamen", "grand prix", "open", "championship", "marathon"]):
+                continue
+            link = a.get("href", "")
+            found.append({
+                "title": title, "url": link, "date": "", "venue": "",
+                "sport": "",
+                "source": "kompas.com", "source_label": "Kompas Sport",
+                "reliability": "HIGH",
+            })
+    log.info(f"kompas sport: {len(found)} artikel")
+    return found
+
+
+def scrape_cnnindonesia_sport() -> list[dict]:
+    """CNN Indonesia Olahraga."""
+    found = []
+    soup = fetch("https://www.cnnindonesia.com/olahraga")
+    if soup:
+        for a in soup.select("a[href*='/olahraga/']")[:20]:
+            title = a.get_text(strip=True)
+            if not title or len(title) < 10:
+                continue
+            if not any(k in title.lower() for k in ["jadwal", "indonesia", "piala", "turnamen", "grand prix", "open", "championship", "marathon", "liga"]):
+                continue
+            link = a.get("href", "")
+            if not link.startswith("http"):
+                link = "https://www.cnnindonesia.com" + link
+            found.append({
+                "title": title, "url": link, "date": "", "venue": "",
+                "sport": "",
+                "source": "cnnindonesia.com", "source_label": "CNN Indonesia Sport",
+                "reliability": "MEDIUM",
+            })
+    log.info(f"cnn sport: {len(found)} artikel")
+    return found
+
+
+def scrape_inasgoc() -> list[dict]:
+    """KONI / official sport federation — jadwal resmi."""
+    found = []
+    soup = fetch("https://www.kfrankoni.or.id/kegiatan")
+    if not soup:
+        soup = fetch("https://inasgoc.id/")
+    if soup:
+        for a in soup.select("a")[:20]:
+            title = a.get_text(strip=True)
+            if not title or len(title) < 10:
+                continue
+            if any(k in title.lower() for k in ["event", "kejuaraan", "championship", "turnamen", "jadwal"]):
+                link = a.get("href", "")
+                found.append({
+                    "title": title, "url": link, "date": "", "venue": "",
+                    "sport": "",
+                    "source": "koni.or.id", "source_label": "KONI",
+                    "reliability": "HIGH",
+                })
+    log.info(f"koni/inasgoc: {len(found)} events")
+    return found
+
+
 # ── Deduplicate & Classify ─────────────────────────────────────────────────────
 
 def deduplicate(items: list[dict]) -> list[dict]:
@@ -566,6 +659,10 @@ def main():
         ("Detik Sport",     scrape_detik),
         ("Kemenpora",       scrape_kemenpora),
         ("Ahotu Marathons", scrape_marathons_ahotu),
+        ("Bolasport",       scrape_bolasport),
+        ("Kompas Sport",    scrape_kompas_sport),
+        ("CNN Indonesia",   scrape_cnnindonesia_sport),
+        ("KONI",            scrape_inasgoc),
     ]
 
     for name, fn in scrapers:
