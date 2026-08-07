@@ -1010,6 +1010,26 @@ export const events: SportEvent[] = [
     tags: ['MotoGP', 'Mandalika', '2029'],
     organizer: 'Dorna Sports / MGPA',
   },
+  {
+    id: '51',
+    slug: 'timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-piala-aff-2026-2027',
+    title: 'Timnas Indonesia Diharapkan Bangkit Usai Takluk dari Vietnam di Piala AFF 2026',
+    sport: 'football',
+    category: 'national',
+    status: 'tentative',
+    startDate: '2027-01-01',
+    endDate: '2027-01-04',
+    venue: 'TBA',
+    city: 'Jakarta',
+    country: 'Indonesia',
+    description: '[AUTO-DETECTED] Timnas Indonesia Diharapkan Bangkit Usai Takluk dari Vietnam di Piala AFF 2026. Sumber: Kemenpora. Harap verifikasi info lengkap sebelum publish.',
+    ticketUrl: 'https://www.kemenpora.go.id/detail/6925/timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-p',
+    websiteUrl: 'https://www.kemenpora.go.id/detail/6925/timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-p',
+    priceRange: 'Cek Kemenpora',
+    imageEmoji: '⚽',
+    tags: ['football', 'indonesia', 'jakarta'],
+    organizer: 'Kemenpora',
+  },
 ];
 
 export function getEventBySlug(slug: string): SportEvent | undefined {
