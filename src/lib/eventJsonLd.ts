@@ -85,11 +85,15 @@ export function eventJsonLd(event: SportEvent) {
           lowPrice: range.low,
           highPrice: range.high,
           availability,
+          validFrom: event.startDate,
         }
       : {
           '@type': 'Offer',
           url: offerUrl,
+          price: 0,
+          priceCurrency: 'IDR',
           availability,
+          validFrom: event.startDate,
           ...(event.priceRange && { description: event.priceRange }),
         },
   };
