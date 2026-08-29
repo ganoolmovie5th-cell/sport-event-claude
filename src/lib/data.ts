@@ -1030,6 +1030,26 @@ export const events: SportEvent[] = [
     tags: ['football', 'indonesia', 'jakarta'],
     organizer: 'Kemenpora',
   },
+  {
+    id: '52',
+    slug: 'pelatih-timnas-indonesia-john-herdman-sebut-merdeka-run-2026-simbol-persatuan-dan-gaya-hidup-sehat-2027',
+    title: 'Pelatih Timnas Indonesia John Herdman Sebut Merdeka Run 2026 Simbol Persatuan dan Gaya Hidup Sehat',
+    sport: 'football',
+    category: 'national',
+    status: 'tentative',
+    startDate: '2027-01-01',
+    endDate: '2027-01-04',
+    venue: 'TBA',
+    city: 'Jakarta',
+    country: 'Indonesia',
+    description: '[AUTO-DETECTED] Pelatih Timnas Indonesia John Herdman Sebut Merdeka Run 2026 Simbol Persatuan dan Gaya Hidup Sehat. Sumber: Kemenpora. Harap verifikasi info lengkap sebelum publish.',
+    ticketUrl: 'https://www.kemenpora.go.id/detail/7014/pelatih-timnas-indonesia-john-herdman-sebut-merdeka-run-2026-simb',
+    websiteUrl: 'https://www.kemenpora.go.id/detail/7014/pelatih-timnas-indonesia-john-herdman-sebut-merdeka-run-2026-simb',
+    priceRange: 'Cek Kemenpora',
+    imageEmoji: '⚽',
+    tags: ['football', 'indonesia', 'jakarta'],
+    organizer: 'Kemenpora',
+  },
 ];
 
 export function getEventBySlug(slug: string): SportEvent | undefined {
