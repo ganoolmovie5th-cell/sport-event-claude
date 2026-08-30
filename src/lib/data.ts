@@ -1030,6 +1030,26 @@ export const events: SportEvent[] = [
     tags: ['football', 'indonesia', 'jakarta'],
     organizer: 'Kemenpora',
   },
+  {
+    id: '52',
+    slug: 'hadiri-tim-indonesia-day-menpora-erick-kobarkan-semangat-para-atlet-demi-berikan-yang-terbaik-di-asian-games-2026-2027',
+    title: 'Hadiri Tim Indonesia Day, Menpora Erick Kobarkan Semangat Para Atlet Demi Berikan yang Terbaik di Asian Games 2026',
+    sport: 'multi-sport',
+    category: 'international',
+    status: 'tentative',
+    startDate: '2027-01-01',
+    endDate: '2027-01-04',
+    venue: 'TBA',
+    city: 'Jakarta',
+    country: 'Indonesia',
+    description: '[AUTO-DETECTED] Hadiri Tim Indonesia Day, Menpora Erick Kobarkan Semangat Para Atlet Demi Berikan yang Terbaik di Asian Games 2026. Sumber: Kemenpora. Harap verifikasi info lengkap sebelum publish.',
+    ticketUrl: 'https://www.kemenpora.go.id/detail/7020/hadiri-tim-indonesia-day-menpora-erick-kobarkan-semangat-para-at',
+    websiteUrl: 'https://www.kemenpora.go.id/detail/7020/hadiri-tim-indonesia-day-menpora-erick-kobarkan-semangat-para-at',
+    priceRange: 'Cek Kemenpora',
+    imageEmoji: '🏆',
+    tags: ['multi-sport', 'indonesia', 'jakarta', 'international'],
+    organizer: 'Kemenpora',
+  },
 ];
 
 export function getEventBySlug(slug: string): SportEvent | undefined {
