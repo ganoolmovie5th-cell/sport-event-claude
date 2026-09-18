@@ -1030,6 +1030,26 @@ export const events: SportEvent[] = [
     tags: ['football', 'indonesia', 'jakarta'],
     organizer: 'Kemenpora',
   },
+  {
+    id: '52',
+    slug: 'sumaya-lolos-ke-semifinal-teqball-indonesia-buka-peluang-ukir-sejarah-di-asian-games-aichi-nagoya-2026-2027',
+    title: 'Sumaya Lolos ke Semifinal, Teqball Indonesia Buka Peluang Ukir Sejarah di Asian Games Aichi-Nagoya 2026',
+    sport: 'multi-sport',
+    category: 'international',
+    status: 'tentative',
+    startDate: '2027-01-01',
+    endDate: '2027-01-04',
+    venue: 'TBA',
+    city: 'Jakarta',
+    country: 'Indonesia',
+    description: '[AUTO-DETECTED] Sumaya Lolos ke Semifinal, Teqball Indonesia Buka Peluang Ukir Sejarah di Asian Games Aichi-Nagoya 2026. Sumber: Kemenpora. Harap verifikasi info lengkap sebelum publish.',
+    ticketUrl: 'https://www.kemenpora.go.id/detail/7126/sumaya-lolos-ke-semifinal-teqball-indonesia-buka-peluang-ukir-se',
+    websiteUrl: 'https://www.kemenpora.go.id/detail/7126/sumaya-lolos-ke-semifinal-teqball-indonesia-buka-peluang-ukir-se',
+    priceRange: 'Cek Kemenpora',
+    imageEmoji: '🏆',
+    tags: ['multi-sport', 'indonesia', 'jakarta', 'international'],
+    organizer: 'Kemenpora',
+  },
 ];
 
 export function getEventBySlug(slug: string): SportEvent | undefined {

@@ -1,33 +1,41 @@
 {
-  "generated_at": "07 Aug 2026 14:13 WIB",
+  "generated_at": "19 Sep 2026 04:31 WIB",
   "added_count": 1,
-  "skipped_count": 4,
+  "skipped_count": 6,
   "added": [
     {
-      "id": "51",
-      "slug": "timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-piala-aff-2026-2027",
-      "title": "Timnas Indonesia Diharapkan Bangkit Usai Takluk dari Vietnam di Piala AFF 2026",
+      "id": "52",
+      "slug": "sumaya-lolos-ke-semifinal-teqball-indonesia-buka-peluang-ukir-sejarah-di-asian-games-aichi-nagoya-2026-2027",
+      "title": "Sumaya Lolos ke Semifinal, Teqball Indonesia Buka Peluang Ukir Sejarah di Asian Games Aichi-Nagoya 2026",
       "source": "kemenpora.go.id",
-      "url": "https://www.kemenpora.go.id/detail/6925/timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-p",
+      "url": "https://www.kemenpora.go.id/detail/7126/sumaya-lolos-ke-semifinal-teqball-indonesia-buka-peluang-ukir-se",
       "date": "",
       "venue": ""
     }
   ],
   "skipped": [
     {
-      "title": "Raih Perak Asian Taekwondo Indonesia Open Championships 2026 Jadi Momen Spesial Adrien Kaiser",
+      "title": "Soft Tennis Indonesia Pastikan Medali Asian Games 2026 dari Beregu Putra",
       "reason": "reliability=HIGH, source=kompas.com"
     },
     {
-      "title": "Raihan Fadila Raih Emas Indonesia Open Championship, Modal Awal Menuju Olimpiade 2028",
+      "title": "Ayu Made Sriartha dan Daniel Hutapea jadi Pembawa Bendera Indonesia di Upacara Pembukaan Asian Games 2026",
       "reason": "reliability=HIGH, source=kompas.com"
     },
     {
-      "title": "PBVSI Umumkan 18 Pemain Timnas Voli Putra Indonesia untuk Asian Games 2026",
+      "title": "Jadwal Voli Asian Games 2026: Timnas Indonesia Tantang Tuan Rumah Sore Ini",
       "reason": "reliability=HIGH, source=kompas.com"
     },
     {
-      "title": "8th Asian Taekwondo Indonesia Open Championships jadi Rangkaian HUT ke-81 TNI",
+      "title": "Jumpa Rumania di Piala Davis 2026, Indonesia Andalkan Petenis Muda",
+      "reason": "reliability=HIGH, source=kompas.com"
+    },
+    {
+      "title": "Hasil Voli Asian Games 2026: Bungkam Nepal 3-0, Timnas Voli Putri Indonesia ke Perempat Final",
+      "reason": "reliability=HIGH, source=kompas.com"
+    },
+    {
+      "title": "Timnas Basket Putri Indonesia Puas Revans Atas Thailand di Asian Games 2026",
       "reason": "reliability=HIGH, source=kompas.com"
     }
   ],
