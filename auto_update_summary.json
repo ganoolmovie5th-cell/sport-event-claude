@@ -1,35 +1,56 @@
 {
-  "generated_at": "07 Aug 2026 14:13 WIB",
-  "added_count": 1,
-  "skipped_count": 4,
+  "generated_at": "21 Sep 2026 04:18 WIB",
+  "added_count": 2,
+  "skipped_count": 7,
   "added": [
     {
-      "id": "51",
-      "slug": "timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-piala-aff-2026-2027",
-      "title": "Timnas Indonesia Diharapkan Bangkit Usai Takluk dari Vietnam di Piala AFF 2026",
+      "id": "52",
+      "slug": "menpora-erick-saksikan-langsung-perjuangan-sumaya-teqball-hadirkan-perak-pertama-untuk-indonesia-di-asian-games-2026-2027",
+      "title": "Menpora Erick Saksikan Langsung Perjuangan Sumaya, Teqball Hadirkan Perak Pertama untuk Indonesia di Asian Games 2026",
       "source": "kemenpora.go.id",
-      "url": "https://www.kemenpora.go.id/detail/6925/timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-p",
+      "url": "https://www.kemenpora.go.id/detail/7141/menpora-erick-saksikan-langsung-perjuangan-sumaya-teqball-hadirk",
+      "date": "",
+      "venue": ""
+    },
+    {
+      "id": "53",
+      "slug": "seraf-naro-siregar-sabet-perunggu-hadirkan-medali-pertama-untuk-indonesia-di-asian-games-2026-aichi-nagoya-2027",
+      "title": "Seraf Naro Siregar Sabet Perunggu Hadirkan Medali Pertama untuk Indonesia di Asian Games 2026 Aichi-Nagoya",
+      "source": "kemenpora.go.id",
+      "url": "https://www.kemenpora.go.id/detail/7138/seraf-naro-siregar-sabet-perunggu-hadirkan-medali-pertama-untuk-i",
       "date": "",
       "venue": ""
     }
   ],
   "skipped": [
     {
-      "title": "Raih Perak Asian Taekwondo Indonesia Open Championships 2026 Jadi Momen Spesial Adrien Kaiser",
+      "title": "Sejarah Tercipta, Yoga Persembahkan Medali Teqball Pertama Indonesia di Asian Games 2026",
       "reason": "reliability=HIGH, source=kompas.com"
     },
     {
-      "title": "Raihan Fadila Raih Emas Indonesia Open Championship, Modal Awal Menuju Olimpiade 2028",
+      "title": "Asian Games 2026: Respons CdM Tim Indonesia Usai Seraf Naro Siregar Persembahkan Medali Pertama",
       "reason": "reliability=HIGH, source=kompas.com"
     },
     {
-      "title": "PBVSI Umumkan 18 Pemain Timnas Voli Putra Indonesia untuk Asian Games 2026",
+      "title": "Hasil Voli Asian Games 2026: Timnas Voli Putri Indonesia Dapat Pelajaran dari Thailand",
       "reason": "reliability=HIGH, source=kompas.com"
     },
     {
-      "title": "8th Asian Taekwondo Indonesia Open Championships jadi Rangkaian HUT ke-81 TNI",
+      "title": "Seraf Naro Siregar Sumbang Medali Pertama Indonesia di Asian Games 2026",
+      "reason": "reliability=HIGH, source=kompas.com"
+    },
+    {
+      "title": "Jadwal Asian Games 2026: Timnas Voli Putri Indonesia Hadapi Thailand di 8 Besar Pagi Ini",
+      "reason": "reliability=HIGH, source=kompas.com"
+    },
+    {
+      "title": "Evaluasi PP Pelti Usai Tim Tenis Indonesia Tumbang dari Rumania di Piala Davis 2026",
+      "reason": "reliability=HIGH, source=kompas.com"
+    },
+    {
+      "title": "Upacara Pembukaan Asian Games 2026, Tim Indonesia Tampil Memukau",
       "reason": "reliability=HIGH, source=kompas.com"
     }
   ],
-  "message": "Berhasil menambahkan 1 event baru dari sumber HIGH confidence."
+  "message": "Berhasil menambahkan 2 event baru dari sumber HIGH confidence."
 }
