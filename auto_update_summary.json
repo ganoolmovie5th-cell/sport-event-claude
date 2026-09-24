@@ -1,35 +1,18 @@
 {
-  "generated_at": "07 Aug 2026 14:13 WIB",
+  "generated_at": "25 Sep 2026 05:09 WIB",
   "added_count": 1,
-  "skipped_count": 4,
+  "skipped_count": 0,
   "added": [
     {
-      "id": "51",
-      "slug": "timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-piala-aff-2026-2027",
-      "title": "Timnas Indonesia Diharapkan Bangkit Usai Takluk dari Vietnam di Piala AFF 2026",
+      "id": "52",
+      "slug": "menpora-erick-sebut-raihan-emas-tim-bulu-tangkis-asian-games-2026-jadi-bukti-indonesia-mampu-sejajar-di-asia-2027",
+      "title": "Menpora Erick Sebut Raihan Emas Tim Bulu Tangkis Asian Games 2026 Jadi Bukti Indonesia Mampu Sejajar di Asia",
       "source": "kemenpora.go.id",
-      "url": "https://www.kemenpora.go.id/detail/6925/timnas-indonesia-diharapkan-bangkit-usai-takluk-dari-vietnam-di-p",
+      "url": "https://www.kemenpora.go.id/detail/7169/menpora-erick-sebut-raihan-emas-tim-bulu-tangkis-asian-games-2026",
       "date": "",
       "venue": ""
     }
   ],
-  "skipped": [
-    {
-      "title": "Raih Perak Asian Taekwondo Indonesia Open Championships 2026 Jadi Momen Spesial Adrien Kaiser",
-      "reason": "reliability=HIGH, source=kompas.com"
-    },
-    {
-      "title": "Raihan Fadila Raih Emas Indonesia Open Championship, Modal Awal Menuju Olimpiade 2028",
-      "reason": "reliability=HIGH, source=kompas.com"
-    },
-    {
-      "title": "PBVSI Umumkan 18 Pemain Timnas Voli Putra Indonesia untuk Asian Games 2026",
-      "reason": "reliability=HIGH, source=kompas.com"
-    },
-    {
-      "title": "8th Asian Taekwondo Indonesia Open Championships jadi Rangkaian HUT ke-81 TNI",
-      "reason": "reliability=HIGH, source=kompas.com"
-    }
-  ],
+  "skipped": [],
   "message": "Berhasil menambahkan 1 event baru dari sumber HIGH confidence."
 }

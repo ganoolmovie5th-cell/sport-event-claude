@@ -1030,6 +1030,26 @@ export const events: SportEvent[] = [
     tags: ['football', 'indonesia', 'jakarta'],
     organizer: 'Kemenpora',
   },
+  {
+    id: '52',
+    slug: 'menpora-erick-sebut-raihan-emas-tim-bulu-tangkis-asian-games-2026-jadi-bukti-indonesia-mampu-sejajar-di-asia-2027',
+    title: 'Menpora Erick Sebut Raihan Emas Tim Bulu Tangkis Asian Games 2026 Jadi Bukti Indonesia Mampu Sejajar di Asia',
+    sport: 'multi-sport',
+    category: 'international',
+    status: 'tentative',
+    startDate: '2027-01-01',
+    endDate: '2027-01-04',
+    venue: 'TBA',
+    city: 'Jakarta',
+    country: 'Indonesia',
+    description: '[AUTO-DETECTED] Menpora Erick Sebut Raihan Emas Tim Bulu Tangkis Asian Games 2026 Jadi Bukti Indonesia Mampu Sejajar di Asia. Sumber: Kemenpora. Harap verifikasi info lengkap sebelum publish.',
+    ticketUrl: 'https://www.kemenpora.go.id/detail/7169/menpora-erick-sebut-raihan-emas-tim-bulu-tangkis-asian-games-2026',
+    websiteUrl: 'https://www.kemenpora.go.id/detail/7169/menpora-erick-sebut-raihan-emas-tim-bulu-tangkis-asian-games-2026',
+    priceRange: 'Cek Kemenpora',
+    imageEmoji: '🏆',
+    tags: ['multi-sport', 'indonesia', 'jakarta', 'international'],
+    organizer: 'Kemenpora',
+  },
 ];
 
 export function getEventBySlug(slug: string): SportEvent | undefined {
