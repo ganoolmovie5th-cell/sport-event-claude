@@ -1030,6 +1030,26 @@ export const events: SportEvent[] = [
     tags: ['football', 'indonesia', 'jakarta'],
     organizer: 'Kemenpora',
   },
+  {
+    id: '52',
+    slug: 'rahmat-erwin-abdullah-persembahkan-emas-kedua-indonesia-di-asian-games-2026-2027',
+    title: 'Rahmat Erwin Abdullah Persembahkan Emas Kedua Indonesia di Asian Games 2026',
+    sport: 'multi-sport',
+    category: 'international',
+    status: 'tentative',
+    startDate: '2027-01-01',
+    endDate: '2027-01-04',
+    venue: 'TBA',
+    city: 'Jakarta',
+    country: 'Indonesia',
+    description: '[AUTO-DETECTED] Rahmat Erwin Abdullah Persembahkan Emas Kedua Indonesia di Asian Games 2026. Sumber: Kemenpora. Harap verifikasi info lengkap sebelum publish.',
+    ticketUrl: 'https://www.kemenpora.go.id/detail/7196/rahmat-erwin-abdullah-persembahkan-emas-kedua-indonesia-di-asian',
+    websiteUrl: 'https://www.kemenpora.go.id/detail/7196/rahmat-erwin-abdullah-persembahkan-emas-kedua-indonesia-di-asian',
+    priceRange: 'Cek Kemenpora',
+    imageEmoji: '🏆',
+    tags: ['multi-sport', 'indonesia', 'jakarta', 'international'],
+    organizer: 'Kemenpora',
+  },
 ];
 
 export function getEventBySlug(slug: string): SportEvent | undefined {
