@@ -1030,6 +1030,26 @@ export const events: SportEvent[] = [
     tags: ['football', 'indonesia', 'jakarta'],
     organizer: 'Kemenpora',
   },
+  {
+    id: '52',
+    slug: 'sambut-kepulangan-atlet-peraih-emas-asian-games-2026-menpora-erick-mereka-pahlawan-indonesia-2027',
+    title: 'Sambut Kepulangan Atlet Peraih Emas Asian Games 2026, Menpora Erick: Mereka Pahlawan Indonesia',
+    sport: 'multi-sport',
+    category: 'international',
+    status: 'tentative',
+    startDate: '2027-01-01',
+    endDate: '2027-01-04',
+    venue: 'TBA',
+    city: 'Jakarta',
+    country: 'Indonesia',
+    description: '[AUTO-DETECTED] Sambut Kepulangan Atlet Peraih Emas Asian Games 2026, Menpora Erick: Mereka Pahlawan Indonesia. Sumber: Kemenpora. Harap verifikasi info lengkap sebelum publish.',
+    ticketUrl: 'https://www.kemenpora.go.id/detail/7226/sambut-kepulangan-atlet-peraih-emas-asian-games-2026-menpora-eri',
+    websiteUrl: 'https://www.kemenpora.go.id/detail/7226/sambut-kepulangan-atlet-peraih-emas-asian-games-2026-menpora-eri',
+    priceRange: 'Cek Kemenpora',
+    imageEmoji: '🏆',
+    tags: ['multi-sport', 'indonesia', 'jakarta', 'international'],
+    organizer: 'Kemenpora',
+  },
 ];
 
 export function getEventBySlug(slug: string): SportEvent | undefined {
