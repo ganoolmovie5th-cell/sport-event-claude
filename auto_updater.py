@@ -123,10 +123,14 @@ MONTH_MAP = {
     "okt": 10, "nov": 11, "dec": 12, "des": 12,
 }
 
-def parse_date(date_str: str) -> str:
-    """Return ISO date YYYY-MM-DD or fallback next year Jan 1."""
+def parse_date(date_str: str) -> str | None:
+    """Return ISO date YYYY-MM-DD, or None if no real date is found.
+
+    Returning None lets the caller skip items that have no actual schedule
+    (e.g. news articles), instead of inventing a placeholder date.
+    """
     if not date_str:
-        return f"{NOW_WIB.year + 1}-01-01"
+        return None
     s = date_str.lower().strip()
     m = re.search(r"(\d{4})-(\d{2})-(\d{2})", s)
     if m:
@@ -143,7 +147,7 @@ def parse_date(date_str: str) -> str:
         mo = MONTH_MAP.get(mon)
         if mo:
             return f"{y}-{mo:02d}-{d:02d}"
-    return f"{NOW_WIB.year + 1}-01-01"
+    return None
 
 # ── Generate TypeScript entry ─────────────────────────────────────────────────
 def generate_event_entry(item: dict, event_id: int, slug: str) -> str:
@@ -160,7 +164,8 @@ def generate_event_entry(item: dict, event_id: int, slug: str) -> str:
         emoji  = SPORT_EMOJI_MAP.get(sport, "🏆")
 
     category   = detect_category(title)
-    start_date = parse_date(date_str)
+    # Caller guarantees a valid date before reaching here.
+    start_date = parse_date(date_str) or f"{NOW_WIB.year}-01-01"
 
     from datetime import date as dt_date, timedelta as td
     try:
@@ -279,7 +284,12 @@ def main() -> int:
             skipped.append({"title": title, "reason": "event sudah ada di data.ts"})
             continue
 
-        year      = parse_date(item.get("date", ""))[:4]
+        iso_date = parse_date(item.get("date", ""))
+        if not iso_date:
+            skipped.append({"title": title, "reason": "tidak ada tanggal valid (kemungkinan berita, bukan event terjadwal)"})
+            continue
+
+        year      = iso_date[:4]
         base_slug = to_slug(f"{title}-{year}")
         slug      = base_slug
         suffix    = 0
