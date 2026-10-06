@@ -43,3 +43,7 @@ next-env.d.ts
 # AI IDE config
 .kiro/
 .claude/
+
+# Python
+__pycache__/
+*.pyc
