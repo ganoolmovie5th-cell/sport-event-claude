@@ -27,7 +27,7 @@ const homeJsonLd = {
       '@id': `${SITE_URL}/#organization`,
       name: 'SportEvent ID',
       url: SITE_URL,
-      logo: { '@type': 'ImageObject', url: OG_IMAGE },
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo-512.png` },
     },
     ...getUpcomingEvents().slice(0, 12).map(eventJsonLd),
   ],
